@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  equifast-db:
+    image: postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: equifast
+    ports:
+      - 5433:5432

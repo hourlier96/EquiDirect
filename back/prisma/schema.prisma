@@ -1,0 +1,113 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-py"
+}
+
+enum Role {
+  INDIVIDUAL
+  COMPANY
+}
+
+enum Discipline {
+  CSO
+  CCE
+  Dressage
+  Voltige
+  Equifeel
+  Hunter
+  Western
+  PonyGames
+  EquiFun
+  Attelage
+  Endurance
+  HorseBall
+  Polo
+}
+
+enum Skills {
+  Conduite_de_tracteur
+  Travail_a_pied
+  Travail_Monte
+  Autonomie
+  Gestion_de_cheptel
+  Manipulation_entier
+  Debourrage
+  Toilettage
+  Premiers_soins
+  Petits_bricolages
+  Animation
+  Tourisme_equestre
+  EquiHandi
+  Baby_Poney
+  Coaching_en_competition
+  Sortie_en_concours_AM_PRO
+}
+
+enum WorkType {
+  WorkType1
+}
+
+enum WorkTime {
+  Ponctuel
+  Indefini
+}
+
+model User {
+  id         Int         @id @default(autoincrement())
+  email      String      @unique
+  firstname  String
+  lastname   String
+  role       Role
+  individual Individual?
+  company    Company?
+}
+
+model Individual {
+  id                Int          @id @default(autoincrement())
+  user              User         @relation(fields: [userId], references: [id])
+  userId            Int          @unique
+  language          Language?    @relation(fields: [languageId], references: [id])
+  languageId        Int?
+  address           String?
+  disciplines       Discipline[]
+  skills            Skills[]
+  galop             Int?
+  maxMoveKm         Int?
+  selfEmployed      Boolean?
+  searchingWork     Boolean?
+  workType          WorkType[]
+  workTime          WorkTime?
+  experience        Int?
+  prices            Json?
+  housingNeed       Boolean?
+  profilPicture     String? // Uploaded photo link (GCS)
+  professionnalCard String? // Uploaded photo link (GCS)
+  license           String? // Uploaded photo link (GCS)
+  rate              Float?
+}
+
+model Company {
+  id              Int          @id @default(autoincrement())
+  user            User         @relation(fields: [userId], references: [id])
+  userId          Int          @unique
+  language        Language?    @relation(fields: [languageId], references: [id])
+  languageId      Int?
+  disciplines     Discipline[]
+  address         String?
+  housingProvider Boolean?
+  workProvider    Boolean?
+  profilPicture   String? // Uploaded photo link (GCS)
+  rate            Float?
+}
+
+model Language {
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  flag       String? // Uploaded flag image link (GCS)
+  individual Individual[]
+  Company    Company[]
+}
