@@ -3,6 +3,7 @@ import os
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from db import prisma
 from users.company.controller import router as router_company
@@ -12,9 +13,20 @@ from users.individual.controller import router as router_individual
 load_dotenv()
 
 app = FastAPI()
+
 app.include_router(router_users, prefix=os.getenv("API_PREFIX"))
 app.include_router(router_individual, prefix=os.getenv("API_PREFIX"))
 app.include_router(router_company, prefix=os.getenv("API_PREFIX"))
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")
