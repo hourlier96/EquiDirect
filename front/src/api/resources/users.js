@@ -1,22 +1,23 @@
 import { APISettings } from "../config.js";
-
+import axios from "axios";
 export default {
-  index() {
-    return fetch(APISettings.baseURL + "/users/", {
+  getUserFromEmail(email, callback) {
+    return axios({
       method: "GET",
-      headers: APISettings.headers,
+      url: APISettings.baseURL + "/users/",
+      params: {
+        email: email,
+      },
     })
-      .then(function (response) {
-        if (response.status != 200) {
-          throw response.status;
-        } else {
-          return response.json();
-        }
-      })
-      .then(function (data) {
-        console.log(data);
-      });
+      .then(
+        function (response) {
+          callback(response.data);
+        }.bind(this)
+      )
+      .catch(
+        function (error) {
+          callback(error);
+        }.bind(this)
+      );
   },
-
-  store(data) {},
 };

@@ -16,13 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import UsersAPI from "@/api/resources/users.js";
 import { RouterLink } from "vue-router";
-
-onMounted(() => {
-  UsersAPI.index();
-});
 </script>
 
 <style>

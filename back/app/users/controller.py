@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional, Union
 
 from db import prisma
 from fastapi import HTTPException
@@ -7,10 +7,13 @@ from routers.users import router
 from users.model import User
 
 
-@router.get("/", tags=["users"], response_model=List[User])
-async def get_users() -> List[User]:
-    users = await prisma.user.find_many()
-    return users
+@router.get("/", tags=["users"], response_model=Union[List[User], None])
+async def get_users(email: Optional[str] = None) -> List[User]:
+    print(email)
+    if email:
+        return await prisma.user.find_many(where={"email": email})
+
+    return await prisma.user.find_many()
 
 
 @router.post("/", tags=["users"], response_model=User)

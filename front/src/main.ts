@@ -9,6 +9,7 @@ import "@quasar/extras/material-icons/material-icons.css";
 
 // Import Quasar css
 import "quasar/src/css/index.sass";
+import { Notify } from "quasar";
 
 import App from "./App.vue";
 import router from "./router";
@@ -18,7 +19,7 @@ import "./assets/main.css";
 const app = createApp(App);
 
 app.use(Quasar, {
-  plugins: {}, // import Quasar plugins and add here
+  plugins: {Notify}, // import Quasar plugins and add here
   lang: quasarLang,
 });
 

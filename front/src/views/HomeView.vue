@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import HomeComponent from "@/components/HomeComponent.vue";
+import Dashboard from "@/components/Dashboard.vue";
 </script>
 
 <template>
   <main>
-    <HomeComponent />
+    <Dashboard />
   </main>
 </template>
