@@ -22,6 +22,11 @@ export const authStore = defineStore({
         const that = this;
         const response = await userAPI.getUserFromEmail(userEmail)
         that.currentUser = response.data[0]
+    },
+    async signIn(firstName: String, lastName: String, userEmail: String, password: String, role: String) {
+      const that = this;
+      const response = await userAPI.createUser(firstName, lastName, userEmail, password, role)
+      that.currentUser = response.data[0]
     }
   }
 });
