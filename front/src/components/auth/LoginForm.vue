@@ -53,11 +53,11 @@ export default {
       email,
       password,
 
-      onSubmit() {
+      async onSubmit() {
         if (email.value === null || password.value === null) {
           notify.warning("Entrez vos identifiants");
         } else {
-          store.storeUser(email.value).then(function () {
+          store.storeUser({ email: email.value }).then(function () {
             if (store.currentUser.email) {
               notify.success("Rebonjour " + store.currentUser.firstname);
             } else {

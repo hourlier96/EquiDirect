@@ -18,14 +18,10 @@ export const authStore = defineStore({
     userRole: (state) => state.currentUser.role
   },
   actions: {
-    storeUser(userEmail: String, callback: any) {
+    async storeUser(userEmail: String) {
         const that = this;
-        return userAPI.getUserFromEmail(userEmail, (res: any) => {
-            if (res[0] !== undefined) {
-                that.currentUser = res[0];
-                callback();
-            }
-        });
-    },
-  },
+        const response = await userAPI.getUserFromEmail(userEmail)
+        that.currentUser = response.data[0]
+    }
+  }
 });
