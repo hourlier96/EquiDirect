@@ -56,19 +56,9 @@ export default {
 
       onSubmit() {
         if (email.value === null || password.value === null) {
-          $q.notify({
-            color: "red-5",
-            textColor: "white",
-            icon: "warning",
-            message: "Entrez vos identifiants",
-          });
+          notify.error("Entrez vos identifiants");
         } else {
-          $q.notify({
-            color: "orange-4",
-            textColor: "white",
-            icon: "cloud_done",
-            message: "Connexion en cours...",
-          });
+          notify.success("Connexion en cours...");
         }
       },
 

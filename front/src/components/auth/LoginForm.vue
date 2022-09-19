@@ -36,15 +36,14 @@
 </template>
 
 <script>
-import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { authStore } from "@/stores/auth";
+import { notify } from "@/helpers/notify";
 export default {
   props: {
     register: Boolean,
   },
   setup() {
-    const $q = useQuasar();
     const store = authStore();
 
     const email = ref(null);
@@ -56,28 +55,13 @@ export default {
 
       onSubmit() {
         if (email.value === null || password.value === null) {
-          $q.notify({
-            color: "red-5",
-            textColor: "white",
-            icon: "warning",
-            message: "Entrez vos identifiants",
-          });
+          notify.warning("Entrez vos identifiants");
         } else {
           store.storeUser(email.value).then(function () {
             if (store.currentUser.email) {
-              $q.notify({
-                color: "green-4",
-                textColor: "white",
-                icon: "cloud_done",
-                message: "Rebonjour " + store.currentUser.firstname,
-              });
+              notify.success("Rebonjour " + store.currentUser.firstname);
             } else {
-              $q.notify({
-                color: "red-4",
-                textColor: "white",
-                icon: "cloud_done",
-                message: "Identifiants incorrects",
-              });
+              notify.error("Identifiants incorrects");
             }
           });
         }
