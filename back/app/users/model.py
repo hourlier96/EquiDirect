@@ -1,4 +1,3 @@
-import json
 from enum import Enum
 from typing import Dict, List, Optional, Union
 
@@ -18,6 +17,10 @@ class User(BaseModel):
 
     class Config:
         use_enum_values = True
+
+
+class UserPost(User):
+    password: str
 
 
 # COMMON INFORMATIONS

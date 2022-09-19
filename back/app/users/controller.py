@@ -4,12 +4,11 @@ from db import prisma
 from fastapi import HTTPException
 from routers.users import router
 
-from users.model import User
+from users.model import User, UserPost
 
 
 @router.get("/", tags=["users"], response_model=Union[List[User], None])
 async def get_users(email: Optional[str] = None) -> List[User]:
-    print(email)
     if email:
         return await prisma.user.find_many(where={"email": email})
 
@@ -17,7 +16,7 @@ async def get_users(email: Optional[str] = None) -> List[User]:
 
 
 @router.post("/", tags=["users"], response_model=User)
-async def create_user(user_in: User) -> User:
+async def create_user(user_in: UserPost) -> User:
     exists = await prisma.user.find_first(where={"email": user_in.email})
     if exists:
         raise HTTPException(status_code=400, detail="Email already taken")

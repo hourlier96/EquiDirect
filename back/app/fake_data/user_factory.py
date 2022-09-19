@@ -2,18 +2,19 @@ import random
 
 import factory
 from db import prisma
-from users.model import Role, User
+from users.model import Role, User, UserPost
 
 NB_USERS = 51
 
 
 class UserFactory(factory.Factory):
     class Meta:
-        model = User
+        model = UserPost
 
     email = factory.Sequence(lambda n: "random{}@equidirect.com".format(n))
     firstname = factory.Faker("first_name", locale="fr_FR")
     lastname = factory.Faker("last_name", locale="fr_FR")
+    password = "admin"
     role = "COMPANY"
 
 
