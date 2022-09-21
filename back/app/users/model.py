@@ -11,6 +11,7 @@ class Role(str, Enum):
 
 class User(BaseModel):
     email: str
+    salt: str = None
     lastname: Union[str, None] = None
     firstname: Union[str, None] = None
     role: Role

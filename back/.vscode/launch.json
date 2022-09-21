@@ -7,7 +7,7 @@
       "module": "main",
       "request": "launch",
       "console": "integratedTerminal",
-      "cwd": "${fileDirname}/../app"
+      "cwd": "${workspaceFolder}/app"
     }
   ]
 }

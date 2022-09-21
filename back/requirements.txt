@@ -4,3 +4,4 @@ prisma
 black
 factory-boy
 Faker
+bcrypt
