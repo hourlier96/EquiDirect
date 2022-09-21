@@ -10,4 +10,6 @@ def hash_password(plain_text_password, salt):
 
 
 def check_password(plain_text_password, stored_hash):
-    return bcrypt.checkpw(plain_text_password.encode("utf-8"), stored_hash)
+    return bcrypt.checkpw(
+        plain_text_password.encode("utf-8"), stored_hash.encode("utf-8")
+    )

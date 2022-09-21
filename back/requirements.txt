@@ -5,3 +5,5 @@ black
 factory-boy
 Faker
 bcrypt
+python-jose
+python-multipart

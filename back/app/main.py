@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from auth.controller import router as router_auth
 from db import prisma
 from users.company.controller import router as router_company
 from users.controller import router as router_users
@@ -14,6 +15,7 @@ load_dotenv()
 
 app = FastAPI()
 
+app.include_router(router_auth, prefix=os.getenv("API_PREFIX"))
 app.include_router(router_users, prefix=os.getenv("API_PREFIX"))
 app.include_router(router_individual, prefix=os.getenv("API_PREFIX"))
 app.include_router(router_company, prefix=os.getenv("API_PREFIX"))

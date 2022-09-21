@@ -16,8 +16,11 @@ class UserFactory(factory.Factory):
     email = factory.Sequence(lambda n: "random{}@equidirect.com".format(n))
     firstname = factory.Faker("first_name", locale="fr_FR")
     lastname = factory.Faker("last_name", locale="fr_FR")
-    password = "password"
     salt = new_salt()
+    password = hash_password(
+        "password".encode("utf-8"),
+        salt,
+    )
     role = "COMPANY"
 
 
@@ -27,7 +30,10 @@ async def create_fake_users():
 
     for user in users:
         user.role = random.SystemRandom().choice(list(Role))
-        user.salt = UserFactory.salt.decode("utf-8")
-        user.password = "password"
-        user.salt = "salt"
+        salt = new_salt()
+        user.salt = salt.decode("utf-8")
+        user.password = hash_password(
+            "password".encode("utf-8"),
+            salt,
+        )
         await prisma.user.create(data=user.dict())
