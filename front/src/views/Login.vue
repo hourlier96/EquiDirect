@@ -1,7 +1,11 @@
 <template>
   <main>
-    <RegisterForm v-if="props.register" id="register-form" />
-    <LoginForm v-else id="login-form" />
+    <RegisterForm
+      v-if="props.register"
+      id="register-form"
+      class="q-mx-auto q-my-auto"
+    />
+    <LoginForm v-else id="login-form" class="q-mx-auto q-my-auto" />
   </main>
 </template>
 
@@ -12,10 +16,3 @@ const props = defineProps({
   register: Boolean,
 });
 </script>
-
-<style>
-#login-form,
-#register-form {
-  margin: auto;
-}
-</style>

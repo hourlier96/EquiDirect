@@ -12,12 +12,13 @@
 
       <q-input filled type="password" v-model="password" label="Mot de passe" />
       <q-input
+        class="q-mb-md"
         filled
         type="password"
         v-model="confirm_password"
         label="Confirmer mot de passe"
       />
-      <span>Je suis...</span>
+      <span class="text-green-4 text-bold">Je suis...</span>
       <div class="row justify-center">
         <q-card
           class="card-presta q-ma-xs col-5 cursor-pointer"
@@ -25,7 +26,7 @@
         >
           <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
             <div class="text-subtitle2 absolute-top text-center">
-              Prestataire
+              Un prestataire
             </div>
           </q-img>
         </q-card>
@@ -36,7 +37,7 @@
         >
           <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
             <div class="text-subtitle2 absolute-top text-center">
-              Entreprise
+              Une entreprise
             </div>
           </q-img>
         </q-card>
@@ -122,8 +123,11 @@ export default {
       },
 
       onReset() {
+        firstname.value = null;
+        lastname.value = null;
         email.value = null;
         password.value = null;
+        role = null;
       },
     };
   },

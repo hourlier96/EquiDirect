@@ -12,6 +12,10 @@ import { RouterView } from "vue-router";
 </script>
 
 <style scoped>
+#main-content {
+  min-height: 100%;
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;

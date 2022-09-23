@@ -2,10 +2,13 @@
 
 #app {
   font-weight: normal;
+  padding-top: var(--navbar-height);
+  height: 100vh;
 }
 
 #main-content {
   padding: 2rem;
+  background: linear-gradient(azure 80%, lightgreen);
 }
 
 a,
