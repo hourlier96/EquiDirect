@@ -1,10 +1,10 @@
 import json
-from typing import List, Union
+from typing import List
 
 from db import prisma
 from fastapi import HTTPException
 from routers.individual import router
-from users.model import Individual, IndividualIn
+from users.individual.model import Individual, IndividualIn
 from utils.controller_checks import check_creation_allowed
 from utils.prisma_connect import set_foreign_key
 

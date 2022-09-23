@@ -30,7 +30,7 @@ async def access_token(email, password):
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token = create_access_token(
-        data={
+        user={
             "sub": user.email,
             "firstname": user.firstname,
             "lastname": user.lastname,

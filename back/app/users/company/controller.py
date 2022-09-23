@@ -4,7 +4,7 @@ from typing import List
 from db import prisma
 from fastapi import HTTPException
 from routers.company import router
-from users.model import Company, CompanyIn
+from users.company.model import Company, CompanyIn
 from utils.controller_checks import check_creation_allowed
 from utils.prisma_connect import set_foreign_key
 
