@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Dict, List, Optional, Union
 
-from users.model import UserCommonInformation
+from entities.users.model import UserCommonInformation
 
 
 class Skills(str, Enum):

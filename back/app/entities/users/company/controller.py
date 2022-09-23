@@ -2,9 +2,9 @@ import json
 from typing import List
 
 from db import prisma
+from entities.users.company.model import Company, CompanyIn
 from fastapi import HTTPException
 from routers.company import router
-from users.company.model import Company, CompanyIn
 from utils.controller_checks import check_creation_allowed
 from utils.prisma_connect import set_foreign_key
 

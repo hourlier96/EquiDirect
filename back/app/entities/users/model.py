@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Dict, List, Optional, Union
+from typing import List, Optional, Union
 
 from pydantic import BaseModel
 
@@ -48,6 +48,3 @@ class UserCommonInformation(BaseModel):
     disciplines: List[Discipline] = []
     profilPicture: Optional[Union[str, None]] = None
     rate: Optional[Union[float, None]] = None
-
-
-# INDIVIDUAL

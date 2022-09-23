@@ -1,10 +1,9 @@
 from typing import List, Optional, Union
 
 from db import prisma
+from entities.users.model import User
 from fastapi import HTTPException
 from routers.users import router
-
-from users.model import User
 
 
 @router.get("/", tags=["users"], response_model=Union[List[User], None])

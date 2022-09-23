@@ -7,9 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from auth.controller import router as router_auth
 from db import prisma
-from users.company.controller import router as router_company
-from users.controller import router as router_users
-from users.individual.controller import router as router_individual
+from entities.users.company.controller import router as router_company
+from entities.users.controller import router as router_users
+from entities.users.individual.controller import router as router_individual
 
 load_dotenv()
 

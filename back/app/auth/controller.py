@@ -1,10 +1,10 @@
 import datetime
 
 from db import prisma
-from fastapi import Depends, HTTPException, status
+from entities.users.controller import get_users
+from entities.users.model import User, UserPost
+from fastapi import HTTPException, status
 from routers.auth import router
-from users.controller import get_users
-from users.model import User, UserPost
 from utils.hash import check_password, hash_password, new_salt
 
 from auth.jwt import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token

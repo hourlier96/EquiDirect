@@ -1,6 +1,6 @@
 from typing import Optional, Union
 
-from users.model import UserCommonInformation
+from entities.users.model import UserCommonInformation
 
 
 class Company(UserCommonInformation):
