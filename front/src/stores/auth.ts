@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 
 import userAPI from "@/api/resources/users"
+import authAPI from "@/api/auth"
 
 export const authStore = defineStore({
   id: "auth",
@@ -11,6 +12,7 @@ export const authStore = defineStore({
         lastname: null,
         role: null
     },
+    accessToken: null
   }),
   getters: {
     userEmail: (state) => state.currentUser.email,
@@ -19,18 +21,17 @@ export const authStore = defineStore({
   },
   actions: {
     async getJwt(userEmail: String, password: String) {
-      //TODO
+      const response = await authAPI.getJwt(userEmail, password)
+      this.accessToken = response.data.access_token
     },
 
     async storeUser(userEmail: String) {
-        const that = this;
         const response = await userAPI.getUserFromEmail(userEmail)
-        that.currentUser = response.data[0]
+        this.currentUser = response.data;
     },
     async signIn(firstName: String, lastName: String, userEmail: String, password: String, role: String) {
-      const that = this;
       const response = await userAPI.createUser(firstName, lastName, userEmail, password, role)
-      that.currentUser = response.data[0]
+      this.currentUser = response.data[0]
     }
   }
 });

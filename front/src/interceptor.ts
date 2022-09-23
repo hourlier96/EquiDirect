@@ -1,9 +1,10 @@
 import axiosInstance from "./helpers/axios"
+import { authStore } from "./stores/auth";
 
-const setup = (store) => {
+const setup = () => {
     axiosInstance.axiosInstance.interceptors.request.use(
     (config) => {
-        const token = "TODO" //call token
+        const token = authStore().accessToken
         if (config.headers) {
             config.headers["Authorization"] = `Bearer ${token}`
             return config;

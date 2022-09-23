@@ -57,13 +57,19 @@ export default {
         if (email.value === null || password.value === null) {
           notify.warning("Entrez vos identifiants");
         } else {
-          store.storeUser({ email: email.value }).then(function () {
-            if (store.currentUser.email) {
-              notify.success("Rebonjour " + store.currentUser.firstname);
-            } else {
-              notify.error("Identifiants incorrects");
-            }
-          });
+          store
+            .getJwt({ email: email.value, password: password.value })
+            .then(function () {
+              if (store.accessToken) {
+                store.storeUser({ email: email.value }).then(function () {
+                  if (store.currentUser.email) {
+                    notify.success("Rebonjour " + store.currentUser.firstname);
+                  } else {
+                    notify.error("Identifiants incorrects");
+                  }
+                });
+              }
+            });
         }
       },
 

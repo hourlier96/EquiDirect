@@ -1,5 +1,3 @@
-import datetime
-
 from db import prisma
 from entities.users.controller import get_users
 from entities.users.model import User, UserPost
@@ -8,21 +6,21 @@ from routers.auth import router
 from utils.hash import check_password, hash_password, new_salt
 
 from auth.jwt import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
-from auth.model import Token
+from auth.model import Token, UserLogin
 
 
-async def authenticate_user(email: str, plain_text_password: str):
-    user = await get_users(email=email)
+async def authenticate_user(user_login: UserLogin):
+    user = await get_users(email=user_login.email)
     if not user:
         return False
-    if not check_password(plain_text_password, user.password):
+    if not check_password(user_login.password, user.password):
         return False
     return user
 
 
 @router.post("/token", response_model=Token)
-async def access_token(email, password):
-    user = await authenticate_user(email, password)
+async def access_token(user_login: UserLogin):
+    user = await authenticate_user(user_login)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

@@ -6,8 +6,8 @@ from fastapi import HTTPException
 from routers.users import router
 
 
-@router.get("/", tags=["users"], response_model=Union[List[User], None])
-async def get_users(email: Optional[str] = None) -> List[User]:
+@router.get("/", tags=["users"], response_model=Union[List[User], User, None])
+async def get_users(email: Optional[str] = None) -> User | List[User]:
     if email:
         return await prisma.user.find_unique(where={"email": email})
 
