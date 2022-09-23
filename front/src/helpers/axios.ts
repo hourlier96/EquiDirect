@@ -1,39 +1,42 @@
 import axios from "axios";
 import { APISettings } from "@/api/config"
 
+const axiosInstance = axios.create(APISettings);
+
 export default {
+    axiosInstance,
     async get(entity, params) {
-        return await axios(
+        return await axiosInstance(
             {
                 method: "GET",
-                url: `${APISettings.baseURL}/${entity}/`,
+                url: `/${entity}/`,
                 params: params
             }
         )
     },
     async post(entity, payload) {
-        return await axios(
+        return await axiosInstance(
             {
                 method: "POST",
-                url: `${APISettings.baseURL}/${entity}/`,
+                url: `/${entity}/`,
                 data: payload
             }
         )
     },
     async put(entity, payload) {
-        return await axios(
+        return await axiosInstance(
             {
                 method: "PUT",
-                url: `${APISettings.baseURL}/${entity}/`,
+                url: `/${entity}/`,
                 data: payload
             }
         )
     },
     async delete(entity, id) {
-        return await axios(
+        return await axiosInstance(
             {
                 method: "DELETE",
-                url: `${APISettings.baseURL}/${entity}/${id}`,
+                url: `/${entity}/${id}`,
             }
         )
     }

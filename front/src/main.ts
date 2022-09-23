@@ -14,6 +14,7 @@ import { Notify } from "quasar";
 
 import App from "./App.vue";
 import router from "./router";
+import setup from "./interceptor";
 
 import "./assets/main.css";
 
@@ -26,5 +27,6 @@ app.use(Quasar, {
 
 app.use(createPinia());
 app.use(router);
+app.use(setup)
 
 app.mount("#app");

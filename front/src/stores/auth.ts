@@ -18,6 +18,10 @@ export const authStore = defineStore({
     userRole: (state) => state.currentUser.role
   },
   actions: {
+    async getJwt(userEmail: String, password: String) {
+      //TODO
+    },
+
     async storeUser(userEmail: String) {
         const that = this;
         const response = await userAPI.getUserFromEmail(userEmail)
