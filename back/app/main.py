@@ -10,6 +10,7 @@ from db import prisma
 from entities.users.company.controller import router as router_company
 from entities.users.controller import router as router_users
 from entities.users.individual.controller import router as router_individual
+from mail.mail import router as router_mail
 
 load_dotenv()
 
@@ -19,6 +20,7 @@ app.include_router(router_auth, prefix=os.getenv("API_PREFIX"))
 app.include_router(router_users, prefix=os.getenv("API_PREFIX"))
 app.include_router(router_individual, prefix=os.getenv("API_PREFIX"))
 app.include_router(router_company, prefix=os.getenv("API_PREFIX"))
+app.include_router(router_mail, prefix=os.getenv("API_PREFIX"))
 
 origins = ["*"]
 
