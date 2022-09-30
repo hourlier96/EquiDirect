@@ -1,9 +1,11 @@
 import json
 import random
+from unittest import mock
 
 import factory
 from db import prisma
-from users.model import Company, Discipline, Skills, WorkTime, WorkType
+from entities.users.company.model import Company
+from entities.users.model import Discipline
 from utils.prisma_connect import set_foreign_key
 
 NB_COMPANY = 25

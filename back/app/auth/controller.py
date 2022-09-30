@@ -45,7 +45,6 @@ async def create_user(user_in: UserPost) -> User:
     if exists:
         raise HTTPException(status_code=400, detail="Email already taken")
     salt = new_salt()
-    user_in.salt = salt.decode("utf-8")
     user_in.password = hash_password(user_in.password.encode("utf-8"), salt)
     created = await prisma.user.create(data=user_in.dict())
     return created

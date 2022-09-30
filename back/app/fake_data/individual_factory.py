@@ -3,7 +3,8 @@ import random
 
 import factory
 from db import prisma
-from users.model import Discipline, Individual, Skills, WorkTime, WorkType
+from entities.users.individual.model import Individual, Skills, WorkTime, WorkType
+from entities.users.model import Discipline
 from utils.prisma_connect import set_foreign_key
 
 NB_INDIVIDUAL = 25
