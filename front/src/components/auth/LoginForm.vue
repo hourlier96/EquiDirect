@@ -37,6 +37,8 @@
 
 <script>
 import { ref } from "vue";
+import router from "@/router";
+
 import { authStore } from "@/stores/auth";
 import { notify } from "@/helpers/notify";
 export default {
@@ -62,13 +64,13 @@ export default {
             .then(function () {
               if (store.accessToken) {
                 store.storeUser({ email: email.value }).then(function () {
-                  if (store.currentUser.email) {
-                    notify.success("Rebonjour " + store.currentUser.firstname);
-                  } else {
-                    notify.error("Identifiants incorrects");
-                  }
+                  notify.success("Connexion réussie !");
+                  router.push({ path: "/dashboard" });
                 });
               }
+            })
+            .catch(() => {
+              notify.error("Identifiants incorrects");
             });
         }
       },

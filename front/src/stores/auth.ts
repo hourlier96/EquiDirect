@@ -1,18 +1,19 @@
 import { defineStore } from "pinia";
 
+import { storage } from "@/helpers/storage"
 import userAPI from "@/api/resources/users"
 import authAPI from "@/api/auth"
-
+console.log(storage.getAuth().currentUser);
 export const authStore = defineStore({
   id: "auth",
   state: () => ({
     currentUser: {
-        email: null,
-        firstname: null,
-        lastname: null,
-        role: null
+        email: storage.getAuth().currentUser.email || null,
+        firstname: storage.getAuth().currentUser.firstname || null,
+        lastname: storage.getAuth().currentUser.lastname || null,
+        role: storage.getAuth().currentUser.role || null,
     },
-    accessToken: null
+    accessToken: storage.getAuth().accessToken || null,
   }),
   getters: {
     userEmail: (state) => state.currentUser.email,
@@ -20,6 +21,14 @@ export const authStore = defineStore({
     userRole: (state) => state.currentUser.role
   },
   actions: {
+    resetUser() {
+      this.currentUser = {
+        email: null,
+        firstname: null,
+        lastname: null,
+        role: null,
+      }
+    },
     async getJwt(userEmail: String, password: String) {
       const response = await authAPI.getJwt(userEmail, password)
       this.accessToken = response.data.access_token

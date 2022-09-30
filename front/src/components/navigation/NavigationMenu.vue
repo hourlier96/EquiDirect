@@ -1,29 +1,51 @@
 <template>
   <div class="wrapper fixed-top">
-    <div class="title q-pa-md"><h3>EQUISPHERE</h3></div>
-    <div class="navbar q-pa-md">
-      <q-btn class="nav-item" push flat color="green" label="Contact"> </q-btn>
-      <q-btn class="nav-item" push flat color="green" label="Qui sommes nous?">
+    <div class="title q-pa-md">
+      <h3 class="text-green">EQUISPHERE</h3>
+    </div>
+    <div v-if="session.isConnected()" class="navbar q-pa-md">
+      <q-btn class="q-ml-md text-green" push flat label="Contact"> </q-btn>
+      <q-btn class="q-ml-md text-green" push flat label="Qui sommes nous?">
       </q-btn>
-      <q-btn class="nav-item" flat color="green" label="Profil"></q-btn>
-      <q-separator class="separator nav-item" vertical />
-      <q-icon class="nav-item" size="2em" name="mail"></q-icon>
-      <q-avatar class="nav-item pic-profil" size="50px">
+      <q-btn class="nav-item text-green" flat label="Profil"></q-btn>
+      <q-separator class="separator q-ml-xs" vertical />
+      <q-avatar class="q-ml-lg pic-profil" size="50px">
         <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
       </q-avatar>
+      <q-btn round class="q-ml-md text-green">
+        <q-icon size="2em" name="mail"></q-icon>
+      </q-btn>
+      <q-btn round class="q-ml-xl text-green">
+        <q-icon @click.prevent="logout()" size="2em" name="logout"></q-icon
+      ></q-btn>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { RouterLink } from "vue-router";
+<script lang="ts">
+import { session } from "@/helpers/session";
+import router from "@/router";
+import { authStore } from "@/stores/auth";
+export default {
+  setup() {
+    const store = authStore();
+    return {
+      session,
+
+      logout() {
+        store.resetUser();
+        router.push({ path: "/login" });
+      },
+    };
+  },
+};
 </script>
 
 <style>
 .wrapper {
   display: flex;
   text-align: end;
-  border-bottom: solid black 2px;
+  border-bottom: solid 2px;
   justify-content: space-between;
   align-items: flex-end;
   padding: 0rem 2rem 0rem 2rem;
@@ -33,10 +55,6 @@ import { RouterLink } from "vue-router";
 
 .navbar span {
   font-weight: bold;
-}
-
-.nav-item {
-  margin-left: 15px;
 }
 
 .separator {
