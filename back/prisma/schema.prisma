@@ -57,14 +57,16 @@ enum WorkTime {
 }
 
 model User {
-  id         Int         @id @default(autoincrement())
-  email      String      @unique
-  password   String
-  firstname  String
-  lastname   String
-  role       Role
-  individual Individual?
-  company    Company?
+  id              Int         @id @default(autoincrement())
+  email           String      @unique
+  password        String
+  firstname       String
+  lastname        String
+  role            Role
+  individual      Individual?
+  company         Company?
+  confirmation_id String      @db.Uuid
+  confirmed       Boolean
 }
 
 model Individual {

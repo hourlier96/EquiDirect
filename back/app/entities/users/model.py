@@ -21,6 +21,8 @@ class User(BaseModel):
 
 class UserPost(User):
     password: str
+    confirmation_id: str
+    confirmed: bool
 
 
 # COMMON INFORMATIONS

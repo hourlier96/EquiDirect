@@ -1,2 +1,2 @@
-# EquiDirect
+# EquiSphere
 

@@ -1,4 +1,4 @@
-# EquiDirect
+# EquiSphere
 
 https://www.prisma.io/
 https://prisma-client-py.readthedocs.io/en/stable/
