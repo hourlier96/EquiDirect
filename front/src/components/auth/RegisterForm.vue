@@ -25,7 +25,10 @@
           @click="setRole('INDIVIDUAL')"
         >
           <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
-            <div class="text-subtitle2 absolute-top text-center">
+            <div
+              class="text-subtitle2 absolute-top text-center"
+              :class="{ 'role-selected': role === 'INDIVIDUAL' }"
+            >
               Un prestataire
             </div>
           </q-img>
@@ -36,7 +39,10 @@
           @click="setRole('COMPANY')"
         >
           <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
-            <div class="text-subtitle2 absolute-top text-center">
+            <div
+              class="text-subtitle2 absolute-top text-center"
+              :class="{ 'role-selected': role === 'COMPANY' }"
+            >
               Une entreprise
             </div>
           </q-img>
@@ -68,6 +74,7 @@
 import { ref } from "vue";
 import { authStore } from "@/stores/auth";
 import { notify } from "@/helpers/notify";
+
 export default {
   props: {
     register: Boolean,
@@ -79,7 +86,7 @@ export default {
     const email = ref(null);
     const password = ref(null);
     const confirm_password = ref(null);
-    let role = null;
+    let role = ref(null);
     return {
       firstname,
       lastname,
@@ -89,7 +96,7 @@ export default {
       role,
 
       setRole(choice) {
-        role = choice;
+        role.value = choice;
       },
 
       onSubmit() {
@@ -99,7 +106,7 @@ export default {
           email.value === null ||
           password.value === null
         ) {
-          notify.error("Completez entièle formulaire");
+          notify.error("Completez entièrement le formulaire");
         } else if (password.value !== confirm_password.value) {
           notify.error("Les mots de passe ne correspondent pas");
         } else {
@@ -142,5 +149,9 @@ export default {
 .card-presta:hover,
 .card-company:hover {
   opacity: 0.8;
+}
+
+.role-selected {
+  background: rgb(76, 175, 80, 0.8) !important;
 }
 </style>
