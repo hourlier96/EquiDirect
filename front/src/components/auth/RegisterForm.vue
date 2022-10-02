@@ -72,6 +72,8 @@
 
 <script>
 import { ref } from "vue";
+import router from "@/router";
+
 import { authStore } from "@/stores/auth";
 import { notify } from "@/helpers/notify";
 
@@ -87,6 +89,7 @@ export default {
     const password = ref(null);
     const confirm_password = ref(null);
     let role = ref(null);
+
     return {
       firstname,
       lastname,
@@ -110,21 +113,34 @@ export default {
         } else if (password.value !== confirm_password.value) {
           notify.error("Les mots de passe ne correspondent pas");
         } else {
-          notify.success("Connexion en cours...");
           store
             .signIn(
               firstname.value,
               lastname.value,
               email.value,
               password.value,
-              role
+              role.value
             )
-            .then(function () {
-              // if (store.currentUser.email) {
-              //   notify.success("Rebonjour " + store.currentUser.firstname);
-              // } else {
-              //   notify.error("Identifiants incorrects");
-              // }
+            .then((response) => {
+              router.push({
+                name: "verify",
+                query: {
+                  confirmation_id: response.data.confirmation_id,
+                  email: email.value,
+                },
+              });
+              notify.success("Inscription validée");
+            })
+            .catch((e) => {
+              if ("response" in e) {
+                if (e.response.data.detail === "Email already taken") {
+                  notify.error(
+                    "Cette addresse e-mail a déja été enregistrée. Veuillez en choisir une autre."
+                  );
+                }
+              } else {
+                console.error("Error on signIn:", e);
+              }
             });
         }
       },
@@ -134,7 +150,8 @@ export default {
         lastname.value = null;
         email.value = null;
         password.value = null;
-        role = null;
+        confirm_password.value = null;
+        role.value = null;
       },
     };
   },

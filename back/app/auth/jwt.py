@@ -6,7 +6,9 @@ from jose import JWTError, jwt
 
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = datetime.timedelta(minutes=30)
+
+DEFAULT_ACCESS_TOKEN_EXPIRE = datetime.timedelta(minutes=15)
+ACCESS_TOKEN_EXPIRE = datetime.timedelta(hours=1)
 
 
 def create_access_token(user: dict, expires_delta: datetime.timedelta | None = None):
@@ -14,7 +16,7 @@ def create_access_token(user: dict, expires_delta: datetime.timedelta | None = N
     if expires_delta:
         expire = datetime.datetime.utcnow() + expires_delta
     else:
-        expire = datetime.datetime.utcnow() + datetime.timedelta(minutes=15)
+        expire = datetime.datetime.utcnow() + DEFAULT_ACCESS_TOKEN_EXPIRE
     user_to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(user_to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -35,11 +37,7 @@ class JWTBearer(HTTPBearer):
                     status_code=status.HTTP_403_FORBIDDEN,
                     detail="Invalid authentication scheme.",
                 )
-            if not self.verify_jwt(credentials.credentials):
-                raise HTTPException(
-                    status_code=status.HTTP_403_FORBIDDEN,
-                    detail="Invalid token or expired token.",
-                )
+            self.verify_jwt(credentials.credentials)
             return credentials.credentials
         else:
             raise HTTPException(
@@ -50,6 +48,7 @@ class JWTBearer(HTTPBearer):
     def verify_jwt(self, token):
         try:
             decoded = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+            # TODO: More check with verification_id, check user email
             return "sub" in decoded
         except JWTError:
             raise HTTPException(

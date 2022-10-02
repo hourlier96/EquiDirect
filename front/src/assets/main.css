@@ -6,9 +6,21 @@
   height: 100vh;
 }
 
+@media (prefers-color-scheme: dark) {
+  #navigation-menu {
+    background-color: #1b1b1b;
+  }
+}
+
 #main-content {
   padding: 2rem;
   background: linear-gradient(azure 80%, lightgreen);
+}
+@media (prefers-color-scheme: dark) {
+  #main-content {
+    padding: 2rem;
+    background: linear-gradient(#1b1b1b 90%, #383737);
+  }
 }
 
 a,

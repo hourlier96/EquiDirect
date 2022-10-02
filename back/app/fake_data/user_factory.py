@@ -1,3 +1,4 @@
+import datetime
 import random
 
 import factory
@@ -24,6 +25,7 @@ class UserFactory(factory.Factory):
     role = "COMPANY"
     confirmation_id = get_random_uuid()
     confirmed = False
+    last_email_send = None
 
 
 async def create_fake_users():
@@ -38,4 +40,5 @@ async def create_fake_users():
             salt,
         )
         user.confirmation_id = get_random_uuid()
+        user.last_email_send = None
         await prisma.user.create(data=user.dict())

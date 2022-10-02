@@ -10,7 +10,7 @@ from db import prisma
 from entities.users.company.controller import router as router_company
 from entities.users.controller import router as router_users
 from entities.users.individual.controller import router as router_individual
-from mail.mail import router as router_mail
+from mail.controller import router as router_mail
 
 load_dotenv()
 

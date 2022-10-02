@@ -1,16 +1,17 @@
 from db import prisma
 from entities.users.controller import get_users
-from entities.users.model import User, UserPost
+from entities.users.model import UserPost, UserRead
 from fastapi import HTTPException, status
 from routers.auth import router
 from utils.hash import check_password, hash_password, new_salt
+from utils.randomizer import get_random_uuid
 
-from auth.jwt import ACCESS_TOKEN_EXPIRE_MINUTES, create_access_token
+from auth.jwt import ACCESS_TOKEN_EXPIRE, create_access_token
 from auth.model import Token, UserLogin
 
 
 async def authenticate_user(user_login: UserLogin):
-    user = await get_users(email=user_login.email)
+    user = await get_users(email=user_login.email, multiple=False)
     if not user:
         return False
     if not check_password(user_login.password, user.password):
@@ -34,17 +35,20 @@ async def access_token(user_login: UserLogin):
             "lastname": user.lastname,
             "role": user.role,
         },
-        expires_delta=ACCESS_TOKEN_EXPIRE_MINUTES,
+        expires_delta=ACCESS_TOKEN_EXPIRE,
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.post("/register", response_model=User)
-async def create_user(user_in: UserPost) -> User:
+@router.post("/register", response_model=UserRead)
+async def create_user(user_in: UserPost) -> UserRead:
     exists = await prisma.user.find_first(where={"email": user_in.email})
     if exists:
         raise HTTPException(status_code=400, detail="Email already taken")
     salt = new_salt()
     user_in.password = hash_password(user_in.password.encode("utf-8"), salt)
+    user_in.confirmation_id = get_random_uuid()
+    user_in.confirmed = False
+    user_in.last_email_send = None
     created = await prisma.user.create(data=user_in.dict())
     return created

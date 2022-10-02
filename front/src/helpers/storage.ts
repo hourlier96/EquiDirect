@@ -1,4 +1,5 @@
 import { watch } from "vue";
+import defaultUser from "../stores/auth"
 
 export const storage = {
     syncStoreWithLocalStorage(pinia: any) {
@@ -14,6 +15,12 @@ export const storage = {
     },
 
     getAuth() {
-        return JSON.parse((localStorage.getItem('piniaState') as string)).auth
+        const piniaState = JSON.parse((localStorage.getItem('piniaState') as string))
+        if (!piniaState) {
+            return {
+                currentUser: defaultUser
+            }
+        }
+        return piniaState.auth
     }
 }

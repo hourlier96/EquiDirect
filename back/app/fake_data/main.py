@@ -1,13 +1,13 @@
 import asyncio
 
-import faker
 from db import prisma
 from dotenv import load_dotenv
 
 from .company_factory import create_fake_companys
 from .individual_factory import create_fake_individuals
-from .user_factory import create_fake_users
 from .language_factory import create_fake_languages
+from .user_factory import create_fake_users
+
 
 async def on_startup():
     load_dotenv()

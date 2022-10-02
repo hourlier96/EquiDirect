@@ -45,7 +45,7 @@ export default {
 .wrapper {
   display: flex;
   text-align: end;
-  border-bottom: solid 2px;
+  border-bottom: solid 1px;
   justify-content: space-between;
   align-items: flex-end;
   padding: 0rem 2rem 0rem 2rem;
