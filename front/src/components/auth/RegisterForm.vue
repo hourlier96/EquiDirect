@@ -1,6 +1,11 @@
 <template>
-  <div class="q-pa-md" style="max-width: 700px">
-    <q-form @submit="onSubmit" @reset="onReset" class="login-form q-gutter-md">
+  <CardContainer width="700px">
+    <h5 class="text-center q-mb-xl text-green text-bold">Inscription</h5>
+    <q-form
+      @submit="onSubmit"
+      @reset="onReset"
+      class="login-form text-center q-gutter-lg"
+    >
       <q-input standout v-model="firstname" type="text" label="Prénom">
       </q-input>
       <q-input standout v-model="lastname" type="text" label="Nom"> </q-input>
@@ -67,7 +72,7 @@
         >
       </div>
     </q-form>
-  </div>
+  </CardContainer>
 </template>
 
 <script>
@@ -76,6 +81,7 @@ import router from "@/router";
 
 import { authStore } from "@/stores/auth";
 import { notify } from "@/helpers/notify";
+import CardContainer from "../common/CardContainer.vue";
 
 export default {
   props: {
@@ -89,7 +95,6 @@ export default {
     const password = ref(null);
     const confirm_password = ref(null);
     let role = ref(null);
-
     return {
       firstname,
       lastname,
@@ -97,17 +102,16 @@ export default {
       password,
       confirm_password,
       role,
-
       setRole(choice) {
         role.value = choice;
       },
-
       onSubmit() {
         if (
           firstname.value == null ||
           lastname.value == null ||
           email.value === null ||
-          password.value === null
+          password.value === null ||
+          role.value === null
         ) {
           notify.error("Completez entièrement le formulaire");
         } else if (password.value !== confirm_password.value) {
@@ -144,7 +148,6 @@ export default {
             });
         }
       },
-
       onReset() {
         firstname.value = null;
         lastname.value = null;
@@ -155,14 +158,11 @@ export default {
       },
     };
   },
+  components: { CardContainer },
 };
 </script>
 
 <style>
-.login-form {
-  text-align: center;
-}
-
 .card-presta:hover,
 .card-company:hover {
   opacity: 0.8;

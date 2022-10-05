@@ -44,9 +44,6 @@ async def send_confirmation_mail(body: EmailSchema) -> JSONResponse:
     now = datetime.now(timezone.utc) + timedelta(hours=2)
 
     if user.last_email_send is not None:
-        print(now, "   ", user.last_email_send)
-        print(now - user.last_email_send)
-        print(type(now - user.last_email_send))
         if (now - user.last_email_send) < DEFAULT_ACCESS_TOKEN_EXPIRE:
             return JSONResponse(
                 status_code=401,

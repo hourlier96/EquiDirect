@@ -1,5 +1,6 @@
 <template>
-  <NavigationMenu id="navigation-menu"> </NavigationMenu>
+  <NavigationMenu v-if="session.isConnected()" id="navigation-menu">
+  </NavigationMenu>
 
   <div id="main-content">
     <RouterView />
@@ -7,8 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import NavigationMenu from "./components/navigation/NavigationMenu.vue";
-import { RouterView } from "vue-router";
+import NavigationMenu from "@/components/navigation/NavigationMenu.vue";
+import { session } from "@/helpers/session";
 </script>
 
 <style scoped>

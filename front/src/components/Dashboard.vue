@@ -107,10 +107,6 @@ export default {
 </script>
 
 <style>
-.dashboard {
-  background-color: azure !important;
-}
-
 .left-panel {
   width: 65%;
 }

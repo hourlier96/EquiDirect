@@ -1,13 +1,23 @@
 <template>
-  <div class="q-pa-md" style="max-width: 400px">
-    <q-form @submit="onSubmit" @reset="onReset" class="login-form q-gutter-md">
-      <q-input standout v-model="email" type="email">
+  <CardContainer width="700px">
+    <h5 class="text-center q-mb-xl text-green text-bold">Connexion</h5>
+    <q-form
+      @submit="onSubmit"
+      @reset="onReset"
+      class="login-form text-center q-gutter-lg"
+    >
+      <q-input standout v-model="email" type="email" label="Entrez votre email">
         <template v-slot:prepend>
           <q-icon name="mail" />
         </template>
       </q-input>
 
-      <q-input filled type="password" v-model="password" label="Mot de passe" />
+      <q-input
+        filled
+        type="password"
+        v-model="password"
+        label="Entrez votre mot de passe"
+      />
 
       <!-- <q-toggle v-model="accept" label="I accept the license and terms" /> -->
 
@@ -32,7 +42,7 @@
         </router-link>
       </div>
     </q-form>
-  </div>
+  </CardContainer>
 </template>
 
 <script>
@@ -42,6 +52,8 @@ import router from "@/router";
 import userAPI from "@/api/resources/users";
 import { authStore } from "@/stores/auth";
 import { notify } from "@/helpers/notify";
+
+import CardContainer from "../common/CardContainer.vue";
 export default {
   props: {
     register: Boolean,
@@ -95,15 +107,6 @@ export default {
       },
     };
   },
+  components: { CardContainer },
 };
 </script>
-
-<style>
-.login-form {
-  text-align: center;
-}
-
-.to-signup {
-  margin-top: 10px;
-}
-</style>
