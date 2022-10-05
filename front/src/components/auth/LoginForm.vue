@@ -13,11 +13,18 @@
 
       <div>
         <q-btn label="Se connecter" type="submit" color="green" />
-        <q-btn label="Réinitialiser" type="reset" color="green" flat class="q-ml-sm" />
+        <q-btn
+          label="Réinitialiser"
+          type="reset"
+          color="green"
+          flat
+          class="q-ml-sm"
+        />
       </div>
       <div>
         <router-link class="to-signup" to="/register">
-          Pas encore membre? Inscrit toi ici !</router-link>
+          Pas encore membre? Inscrit toi ici !</router-link
+        >
       </div>
       <div>
         <router-link class="to-signup" to="/forgotten-password">
@@ -56,22 +63,25 @@ export default {
           store
             .getJwt({ email: email.value, password: password.value })
             .then(async function (response) {
-              const token = response.data.access_token
-              console.log(token)
-              await userAPI.getUserFromEmail({ email: email.value, access_token: token }).then((response) => {
-                const user = response.data
-                if (!user.confirmed) {
-                  notify.error("Votre compte est en attente de validation. Vérifiez votre boîte mail.");
-                } else {
-                  store.accessToken = token
-                  store.storeUser(email.value).then(function () {
+              const token = response.data.access_token;
+              await userAPI
+                .getUserFromEmail({ email: email.value, access_token: token })
+                .then((response) => {
+                  const user = response.data;
+                  if (!user.confirmed) {
+                    notify.error(
+                      "Votre compte est en attente de validation. Vérifiez votre boîte mail."
+                    );
+                  } else {
+                    store.accessToken = token;
+                    store.storeUser(user);
                     notify.success("Rebonjour " + store.currentUser.firstname);
                     router.push({ path: "/dashboard" });
-                  });
-                }
-              }).catch((e) => {
-                console.error(e);
-              })
+                  }
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
             })
             .catch(() => {
               notify.error("Identifiants incorrects");

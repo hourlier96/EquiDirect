@@ -40,10 +40,9 @@ export const authStore = defineStore({
     async getJwt(userEmail: String, password: String) {
       return await authAPI.getJwt(userEmail, password);
     },
-    async storeUser(userEmail: String) {
-      const response = await userAPI.getUserFromEmail(userEmail);
-      console.log(response);
-      this.currentUser = response.data;
+    async storeUser(user) {
+      this.currentUser = user;
+      console.log("Logged user: ", user);
     },
     async signIn(
       firstName: String,

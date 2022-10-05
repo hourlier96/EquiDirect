@@ -33,7 +33,9 @@ export default {
       session,
 
       logout() {
+        console.log(store.currentUser);
         store.resetUser();
+        console.log(store.currentUser);
         router.push({ path: "/login" });
       },
     };
