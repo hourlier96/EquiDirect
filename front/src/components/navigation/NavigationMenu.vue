@@ -1,8 +1,11 @@
 <template>
   <div class="wrapper fixed-top">
-    <div class="title q-pa-md">
-      <h3 class="text-green">EQUISPHERE</h3>
-    </div>
+    <img
+      class="logo"
+      src="src/assets/images/logo.png"
+      alt="Equisphere"
+      height="100"
+    />
     <div v-if="session.isConnected()" class="navbar q-pa-md">
       <q-btn class="q-ml-md text-green" push flat label="Contact"> </q-btn>
       <q-btn class="q-ml-md text-green" push flat label="Qui sommes nous?">
@@ -47,15 +50,16 @@ export default {
 .wrapper {
   display: flex;
   text-align: end;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  border: 1px solid rgb(201, 201, 201);
   width: 93%;
   border-radius: 0px 0px 10px 10px;
   margin: auto;
   justify-content: space-between;
   align-items: flex-end;
   padding: 0rem 2rem 0rem 2rem;
-  background: azure;
+  background: #f8fffe;
   z-index: 1000;
 }
 

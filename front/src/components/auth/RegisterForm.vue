@@ -29,7 +29,10 @@
           class="card-presta q-ma-xs col-5 cursor-pointer"
           @click="setRole('INDIVIDUAL')"
         >
-          <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
+          <q-img
+            class="role-img"
+            src="src/assets/images/register/prestataire.jpg"
+          >
             <div
               class="text-subtitle2 absolute-top text-center"
               :class="{ 'role-selected': role === 'INDIVIDUAL' }"
@@ -43,7 +46,10 @@
           class="card-company q-ma-xs col-5 cursor-pointer"
           @click="setRole('COMPANY')"
         >
-          <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
+          <q-img
+            class="role-img"
+            src="src/assets/images/register/entreprise.jpg"
+          >
             <div
               class="text-subtitle2 absolute-top text-center"
               :class="{ 'role-selected': role === 'COMPANY' }"
@@ -166,6 +172,11 @@ export default {
 .card-presta:hover,
 .card-company:hover {
   opacity: 0.8;
+}
+
+.role-img {
+  max-height: 180px;
+  object-position: 50% 20% !important;
 }
 
 .role-selected {

@@ -3,7 +3,7 @@
 <template>
   <div class="dashboard">
     <div class="left-panel">
-      <div class="row-dashboard">
+      <!-- <div class="row-dashboard">
         <q-card class="card-role">
           <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
             <div class="absolute-bottom text-h6">Les professionnels</div>
@@ -22,69 +22,75 @@
             Trouve le candidat idéal à travers une sélection simple et intuitive
           </q-card-section>
         </q-card>
-      </div>
+      </div> -->
     </div>
     <div>
       <q-carousel
-        v-model="slide"
-        transition-prev="scale"
-        transition-next="scale"
         swipeable
         animated
-        control-color="white"
-        navigation
-        padding
-        arrows
-        height="300px"
-        class="bg-primary text-white shadow-1 rounded-borders"
+        v-model="slide"
+        :autoplay="autoplay"
+        ref="carousel"
+        infinite
       >
-        <template v-slot:navigation-icon="{ active, btnProps, onClick }">
-          <q-btn
-            v-if="active"
-            size="lg"
-            icon="home"
-            color="yellow"
-            flat
-            round
-            dense
-            @click="onClick"
-          />
-          <q-btn
-            v-else
-            size="sm"
-            :icon="btnProps.icon"
-            color="white"
-            flat
-            round
-            dense
-            @click="onClick"
-          />
-        </template>
+        <q-carousel-slide
+          :name="1"
+          img-src="https://cdn.quasar.dev/img/mountains.jpg"
+        />
+        <q-carousel-slide
+          :name="2"
+          img-src="https://cdn.quasar.dev/img/parallax1.jpg"
+        />
+        <q-carousel-slide
+          :name="3"
+          img-src="https://cdn.quasar.dev/img/parallax2.jpg"
+        />
+        <q-carousel-slide
+          :name="4"
+          img-src="https://cdn.quasar.dev/img/quasar.jpg"
+        />
 
-        <q-carousel-slide name="style" class="column no-wrap flex-center">
-          <q-icon name="style" size="56px" />
-          <div class="q-mt-md text-center">
-            {{ lorem }}
-          </div>
-        </q-carousel-slide>
-        <q-carousel-slide name="tv" class="column no-wrap flex-center">
-          <q-icon name="live_tv" size="56px" />
-          <div class="q-mt-md text-center">
-            {{ lorem }}
-          </div>
-        </q-carousel-slide>
-        <q-carousel-slide name="layers" class="column no-wrap flex-center">
-          <q-icon name="layers" size="56px" />
-          <div class="q-mt-md text-center">
-            {{ lorem }}
-          </div>
-        </q-carousel-slide>
-        <q-carousel-slide name="map" class="column no-wrap flex-center">
-          <q-icon name="terrain" size="56px" />
-          <div class="q-mt-md text-center">
-            {{ lorem }}
-          </div>
-        </q-carousel-slide>
+        <template v-slot:control>
+          <q-carousel-control
+            position="top-right"
+            :offset="[18, 18]"
+            class="text-white rounded-borders"
+            style="background: rgba(0, 0, 0, 0.3); padding: 4px 8px"
+          >
+            <q-toggle
+              dense
+              dark
+              color="orange"
+              v-model="autoplay"
+              label="Auto Play"
+            />
+          </q-carousel-control>
+
+          <q-carousel-control
+            position="bottom-right"
+            :offset="[18, 18]"
+            class="q-gutter-xs"
+          >
+            <q-btn
+              push
+              round
+              dense
+              color="orange"
+              text-color="black"
+              icon="arrow_left"
+              @click="$refs.carousel.previous()"
+            />
+            <q-btn
+              push
+              round
+              dense
+              color="orange"
+              text-color="black"
+              icon="arrow_right"
+              @click="$refs.carousel.next()"
+            />
+          </q-carousel-control>
+        </template>
       </q-carousel>
     </div>
   </div>
@@ -94,11 +100,10 @@
 import { ref } from "vue";
 
 export default {
-  setup() {
+  data() {
     return {
       slide: ref(1),
       autoplay: ref(true),
-      slide: ref("style"),
       lorem:
         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque voluptatem totam, architecto cupiditate officia rerum, error dignissimos praesentium libero ab nemo.",
     };
