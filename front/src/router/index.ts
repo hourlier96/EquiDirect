@@ -4,6 +4,8 @@ import Login from "@/views/Login.vue";
 import MailSending from "@/views/mailing/MailSending.vue";
 import MailValidation from "@/views/mailing/MailValidation.vue";
 import ProfileGlobal from "@/views/users/ProfileGlobal.vue";
+import ProfileIndividual from "@/views/users/ProfileIndividual.vue";
+import ProfileCompany from "@/views/users/ProfileCompany.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,12 +40,22 @@ const router = createRouter({
       },
     },
     {
-      path: "/profile",
+      path: "/profile/:id",
       name: "profile",
       component: ProfileGlobal,
       meta: {
         requiresAuth: true,
       },
+      children: [
+        {
+          path: 'individual',
+          component: ProfileIndividual
+        },
+        {
+          path: 'company',
+          component: ProfileCompany
+        },
+      ]
     },
     { path: "/:catchAll(.*)", redirect: "/login" },
   ],

@@ -2,7 +2,7 @@
   <div class="wrapper fixed-top">
     <img
       class="logo"
-      src="src/assets/images/logo.png"
+      src="@/assets/images/logo.png"
       alt="Equisphere"
       height="100"
     />
@@ -22,7 +22,7 @@
       </q-avatar>
 
       <q-btn
-        to="/profile"
+        :to="getProfilePage()"
         class="q-ml-md text-green"
         :class="isActive('profile')"
         round
@@ -48,7 +48,13 @@ import { authStore } from "@/stores/auth";
 export default {
   methods: {
     isActive(name) {
-      return { active: this.$route.name === name };
+      if (this.$route.matched.length > 0) {
+        return { active: this.$route.matched[0].name === name };
+      }
+      return { active: false };
+    },
+    getProfilePage() {
+      return `/profile/${session.getId()}/${session.getRole().toLowerCase()}`;
     },
   },
   setup() {

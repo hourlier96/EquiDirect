@@ -4,6 +4,7 @@ import { storage } from "@/helpers/storage";
 import authAPI from "@/api/auth";
 
 const defaultUser = {
+  id: null,
   email: null,
   firstname: null,
   lastname: null,
@@ -16,6 +17,7 @@ export const authStore = defineStore({
   id: "auth",
   state: () => ({
     currentUser: {
+      id: storage.getAuth().currentUser.id || null,
       email: storage.getAuth().currentUser.email || null,
       firstname: storage.getAuth().currentUser.firstname || null,
       lastname: storage.getAuth().currentUser.lastname || null,

@@ -10,10 +10,13 @@ export const session = {
     getLastName() {
         return authStore().currentUser.lastname
     },
-    getRoleName() {
+    getRole() {
         return authStore().currentUser.role
     },
     getEmail() {
         return authStore().currentUser.email
+    },
+    getId() {
+        return authStore().currentUser.id
     }
 }
