@@ -32,8 +32,8 @@
         />
       </div>
       <div>
-        <router-link class="to-signup" to="/register">
-          Pas encore membre? Inscrit toi ici !</router-link
+        <router-link class="to-signup" to="/register"
+          >Pas encore membre? Inscris toi ici !</router-link
         >
       </div>
       <div>
@@ -63,7 +63,6 @@ export default {
 
     const email = ref(null);
     const password = ref(null);
-
     return {
       email,
       password,

@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 
 import { storage } from "@/helpers/storage";
-import userAPI from "@/api/resources/users";
 import authAPI from "@/api/auth";
 
 const defaultUser = {
