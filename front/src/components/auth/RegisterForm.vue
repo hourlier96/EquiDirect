@@ -15,7 +15,13 @@
         </template>
       </q-input>
 
-      <q-input filled type="password" v-model="password" label="Mot de passe" />
+      <q-input
+        filled
+        type="password"
+        v-model="password"
+        label="Mot de passe"
+        :rules="passwordRules"
+      />
       <q-input
         class="q-mb-md"
         filled
@@ -92,6 +98,15 @@ import CardContainer from "../common/CardContainer.vue";
 export default {
   props: {
     register: Boolean,
+  },
+  computed: {
+    passwordRules() {
+      return [
+        (val) =>
+          (val.length >= 8 && val !== val.toLowerCase()) ||
+          "La taille du mot de passe doit être de 8 caractères minimum et contenir au moins une majuscule",
+      ];
+    },
   },
   setup() {
     const store = authStore();

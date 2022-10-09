@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CardContainer from "./common/CardContainer.vue";
+</script>
 
 <template>
   <div class="dashboard">
@@ -24,7 +26,7 @@
         </q-card>
       </div> -->
     </div>
-    <div>
+    <CardContainer>
       <q-carousel
         swipeable
         animated
@@ -92,11 +94,11 @@
           </q-carousel-control>
         </template>
       </q-carousel>
-    </div>
+    </CardContainer>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref } from "vue";
 
 export default {
