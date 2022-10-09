@@ -7,20 +7,36 @@
       height="100"
     />
     <div v-if="session.isConnected()" class="navbar q-pa-md">
-      <q-btn class="q-ml-md text-green" push flat label="Contact"> </q-btn>
-      <q-btn class="q-ml-md text-green" push flat label="Qui sommes nous?">
+      <q-btn
+        to="/dashboard"
+        class="q-mr-auto"
+        :class="isActive('dashboard')"
+        flat
+        color="green"
+        label="Accueil"
+      >
       </q-btn>
-      <q-btn class="nav-item text-green" flat label="Profil"></q-btn>
-      <q-separator class="separator q-ml-xs" vertical />
+      <q-separator class="separator q-ml-lg" vertical />
       <q-avatar class="q-ml-lg pic-profil" size="50px">
         <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
       </q-avatar>
-      <q-btn round class="q-ml-md text-green">
+
+      <q-btn
+        to="/profile"
+        class="q-ml-md text-green"
+        :class="isActive('profile')"
+        round
+        push
+      >
+        <q-icon size="2em" name="manage_accounts"></q-icon>
+      </q-btn>
+
+      <q-btn class="q-ml-md text-green" round push>
         <q-icon size="2em" name="mail"></q-icon>
       </q-btn>
-      <q-btn round class="q-ml-xl text-green">
-        <q-icon @click.prevent="logout()" size="2em" name="logout"></q-icon
-      ></q-btn>
+      <q-btn class="q-ml-xl text-green" round push>
+        <q-icon @click.prevent="logout()" size="2em" name="logout"></q-icon>
+      </q-btn>
     </div>
   </div>
 </template>
@@ -30,15 +46,17 @@ import { session } from "@/helpers/session";
 import router from "@/router";
 import { authStore } from "@/stores/auth";
 export default {
+  methods: {
+    isActive(name) {
+      return { active: this.$route.name === name };
+    },
+  },
   setup() {
     const store = authStore();
     return {
       session,
-
       logout() {
-        console.log(store.currentUser);
         store.resetUser();
-        console.log(store.currentUser);
         router.push({ path: "/login" });
       },
     };
@@ -67,9 +85,15 @@ export default {
   font-weight: bold;
 }
 
+.wrapper .active {
+  color: white !important;
+  background-color: var(--vt-c-green) !important;
+}
+
 .separator {
   display: inline-block;
-  height: 40px;
+  height: 50px;
   vertical-align: top;
+  width: 1px;
 }
 </style>

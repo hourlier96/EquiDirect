@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import Login from "@/views/Login.vue";
-import MailSending from "@/views/MailValidation/MailSending.vue";
-import MailValidation from "@/views/MailValidation/MailValidation.vue";
+import MailSending from "@/views/mailing/MailSending.vue";
+import MailValidation from "@/views/mailing/MailValidation.vue";
+import ProfileGlobal from "@/views/users/ProfileGlobal.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,8 +34,16 @@ const router = createRouter({
       name: "dashboard",
       component: HomeView,
       meta: {
-        requiresAuth: true
-      }
+        requiresAuth: true,
+      },
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: ProfileGlobal,
+      meta: {
+        requiresAuth: true,
+      },
     },
     { path: "/:catchAll(.*)", redirect: "/login" },
   ],
