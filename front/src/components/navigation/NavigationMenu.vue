@@ -54,7 +54,9 @@ export default {
       return { active: false };
     },
     getProfilePage() {
-      return `/profile/${session.getId()}/${session.getRole().toLowerCase()}`;
+      return `/profile/${session.getId()}/${session
+        .getRole()
+        .toLowerCase()}?view=general`;
     },
   },
   setup() {

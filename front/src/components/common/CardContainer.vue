@@ -1,5 +1,12 @@
 <template>
-  <div class="container q-pa-md" :style="'max-width:' + width">
+  <div class="container q-pa-md" :style="'width:' + width">
+    <h5
+      v-if="title"
+      class="q-mb-xl text-green"
+      :class="{ 'text-center': bigTitle, 'text-bold': bigTitle }"
+    >
+      {{ title }}
+    </h5>
     <slot></slot>
   </div>
 </template>
@@ -7,6 +14,8 @@
 <script setup lang="ts">
 const props = defineProps({
   width: String,
+  title: String,
+  bigTitle: Boolean,
 });
 </script>
 

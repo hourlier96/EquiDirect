@@ -3,7 +3,7 @@
   </NavigationMenu>
 
   <div id="main-content">
-    <RouterView />
+    <router-view />
   </div>
 </template>
 

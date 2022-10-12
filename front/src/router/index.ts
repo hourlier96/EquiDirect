@@ -3,7 +3,7 @@ import HomeView from "@/views/HomeView.vue";
 import Login from "@/views/Login.vue";
 import MailSending from "@/views/mailing/MailSending.vue";
 import MailValidation from "@/views/mailing/MailValidation.vue";
-import ProfileGlobal from "@/views/users/ProfileGlobal.vue";
+import Profile from "@/views/users/Profile.vue";
 import ProfileIndividual from "@/views/users/ProfileIndividual.vue";
 import ProfileCompany from "@/views/users/ProfileCompany.vue";
 
@@ -42,7 +42,7 @@ const router = createRouter({
     {
       path: "/profile/:id",
       name: "profile",
-      component: ProfileGlobal,
+      component: Profile,
       meta: {
         requiresAuth: true,
       },

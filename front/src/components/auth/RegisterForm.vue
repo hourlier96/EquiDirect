@@ -1,6 +1,10 @@
 <template>
-  <CardContainer width="700px">
-    <h5 class="text-center q-mb-xl text-green text-bold">Inscription</h5>
+  <CardContainer
+    title="Inscription"
+    :centered="true"
+    :bigTitle="true"
+    width="700px"
+  >
     <q-form
       @submit="onSubmit"
       @reset="onReset"

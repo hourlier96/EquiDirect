@@ -1,6 +1,10 @@
 <template>
-  <CardContainer width="700px">
-    <h5 class="text-center q-mb-xl text-green text-bold">Connexion</h5>
+  <CardContainer
+    title="Connexion"
+    :centered="true"
+    :bigTitle="true"
+    width="700px"
+  >
     <q-form
       @submit="onSubmit"
       @reset="onReset"
