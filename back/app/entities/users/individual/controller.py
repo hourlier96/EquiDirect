@@ -1,36 +1,33 @@
-import json
-from typing import List
+from typing import List, Optional, Union
 
 from db import prisma
-from entities.users.individual.model import Individual, IndividualIn
+from entities.users.individual.model import Individual
 from fastapi import HTTPException
 from routers.individual import router
-from utils.controller_checks import check_creation_allowed
-from utils.prisma_connect import set_foreign_key
 
 
-@router.get("/", tags=["individuals"], response_model=List[Individual])
-async def get_individual() -> List[Individual]:
-    individuals = await prisma.individual.find_many()
-    return individuals
+@router.get(
+    "/", tags=["individuals"], response_model=Union[List[Individual], Individual, None]
+)
+async def get_individual(
+    user_id: Optional[int] = None,
+    multiple: bool = True,
+) -> List[Individual]:
 
+    filters = {}
+    if user_id:
+        filters["userId"] = user_id
 
-@router.post("/", tags=["individuals"], response_model=Individual)
-async def create_individual(individual_in: IndividualIn):
-
-    check_creation_allowed(individual_in)
-
-    data = individual_in.dict()
-    set_foreign_key(data, "user", individual_in.user)
-    if data["language"] is None:
-        del data["language"]
+    if not multiple:
+        individual = await prisma.individual.find_first(where=filters)
+        if not individual:
+            raise HTTPException(
+                status_code=404,
+                detail="Individual not found",
+            )
+        return individual
     else:
-        set_foreign_key(data, "language", individual_in.language)
-    if "prices" in data:
-        data["prices"] = json.dumps(data["prices"])
-
-    created = await prisma.individual.create(data=data)
-    return created
+        return await prisma.individual.find_many(where=filters)
 
 
 @router.put("/{individual_id}", tags=["individuals"], response_model=Individual)

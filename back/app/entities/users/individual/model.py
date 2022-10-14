@@ -33,7 +33,8 @@ class WorkTime(str, Enum):
 
 
 class Individual(UserCommonInformation):
-
+    id: int
+    userId: int
     skills: List[Skills] = []
     galop: Optional[Union[int, None]] = None
     maxMoveKm: Optional[Union[int, None]] = None

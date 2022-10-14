@@ -14,17 +14,17 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import Menu from "@/components/profile/Menu.vue";
-import userAPI from "@/api/resources/users";
+import individualAPI from "@/api/resources/individual";
 import { session } from "@/helpers/session";
 
 const activeSection = ref("general");
 
 onMounted(async () => {
-  await userAPI
-    .getUserFromEmail({ email: session.getEmail() })
+  await individualAPI
+    .getIndividualFromUser({ user_id: session.getId() })
     .then((response) => {
-      const user = response.data;
-      console.log(user);
+      const individual = response.data;
+      console.log(individual);
     });
 });
 
