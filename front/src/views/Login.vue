@@ -16,9 +16,10 @@
 </template>
 
 <script setup lang="ts">
+import { session } from "@/helpers/session";
 import RegisterForm from "@/components/auth/RegisterForm.vue";
 import LoginForm from "@/components/auth/LoginForm.vue";
-import { session } from "@/helpers/session";
+
 const props = defineProps({
   register: Boolean,
 });

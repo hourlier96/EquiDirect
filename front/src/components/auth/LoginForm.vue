@@ -49,67 +49,54 @@
   </CardContainer>
 </template>
 
-<script>
+<script setup>
 import { ref } from "vue";
 import router from "@/router";
-
 import userAPI from "@/api/resources/users";
 import { authStore } from "@/stores/auth";
 import { notify } from "@/helpers/notify";
+import CardContainer from "@/components/common/CardContainer.vue";
 
-import CardContainer from "../common/CardContainer.vue";
-export default {
-  props: {
-    register: Boolean,
-  },
-  setup() {
-    const store = authStore();
+const store = authStore();
 
-    const email = ref(null);
-    const password = ref(null);
-    return {
-      email,
-      password,
+const email = ref(null);
+const password = ref(null);
 
-      async onSubmit() {
-        if (email.value === null || password.value === null) {
-          notify.warning("Entrez vos identifiants");
-        } else {
-          store
-            .getJwt({ email: email.value, password: password.value })
-            .then(async function (response) {
-              const token = response.data.access_token;
-              await userAPI
-                .getUserFromEmail({ email: email.value, access_token: token })
-                .then((response) => {
-                  const user = response.data;
-                  if (!user.confirmed) {
-                    notify.error(
-                      "Votre compte est en attente de validation. Vérifiez votre boîte mail."
-                    );
-                  } else {
-                    store.accessToken = token;
-                    store.storeUser(user);
-                    notify.success("Rebonjour " + store.currentUser.firstname);
-                    router.push({ path: "/dashboard" });
-                  }
-                })
-                .catch((e) => {
-                  console.error(e);
-                });
-            })
-            .catch(() => {
-              notify.error("Identifiants incorrects");
-            });
-        }
-      },
+async function onSubmit() {
+  if (email.value === null || password.value === null) {
+    notify.warning("Entrez vos identifiants");
+  } else {
+    store
+      .getJwt({ email: email.value, password: password.value })
+      .then(async function (response) {
+        const token = response.data.access_token;
+        await userAPI
+          .getUserFromEmail({ email: email.value, access_token: token })
+          .then((response) => {
+            const user = response.data;
+            if (!user.confirmed) {
+              notify.error(
+                "Votre compte est en attente de validation. Vérifiez votre boîte mail."
+              );
+            } else {
+              store.accessToken = token;
+              store.storeUser(user);
+              notify.success("Rebonjour " + store.currentUser.firstname);
+              router.push({ path: "/dashboard" });
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+      })
+      .catch(() => {
+        notify.error("Identifiants incorrects");
+      });
+  }
+}
 
-      onReset() {
-        email.value = null;
-        password.value = null;
-      },
-    };
-  },
-  components: { CardContainer },
-};
+function onReset() {
+  email.value = null;
+  password.value = null;
+}
 </script>

@@ -41,35 +41,32 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { useRoute } from "vue-router";
 import { session } from "@/helpers/session";
 import router from "@/router";
 import { authStore } from "@/stores/auth";
-export default {
-  methods: {
-    isActive(name) {
-      if (this.$route.matched.length > 0) {
-        return { active: this.$route.matched[0].name === name };
-      }
-      return { active: false };
-    },
-    getProfilePage() {
-      return `/profile/${session.getId()}/${session
-        .getRole()
-        .toLowerCase()}?view=general`;
-    },
-  },
-  setup() {
-    const store = authStore();
-    return {
-      session,
-      logout() {
-        store.resetUser();
-        router.push({ path: "/login" });
-      },
-    };
-  },
-};
+
+const store = authStore();
+const route = useRoute();
+
+function isActive(name) {
+  if (route.matched.length > 0) {
+    return { active: route.matched[0].name === name };
+  }
+  return { active: false };
+}
+
+function getProfilePage() {
+  return `/profile/${session.getId()}/${session
+    .getRole()
+    .toLowerCase()}?view=general`;
+}
+
+function logout() {
+  store.resetUser();
+  router.push({ path: "/login" });
+}
 </script>
 
 <style>

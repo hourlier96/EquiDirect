@@ -1,14 +1,3 @@
-<script setup lang="ts">
-import CardContainer from "@/components/common/CardContainer.vue";
-import GeneralCard from "@/components/profile/GeneralCard.vue";
-import SkillsCard from "@/components/profile/SkillsCard.vue";
-import SearchCard from "@/components/profile/SearchCard.vue";
-
-defineProps({
-  section: String,
-});
-</script>
-
 <template>
   <CardContainer title="Entrez vos informations">
     <Transition mode="out-in">
@@ -29,6 +18,17 @@ defineProps({
     Période de travail, type de travail, prix, besoin d'hébergement
   </div> -->
 </template>
+
+<script setup lang="ts">
+import CardContainer from "@/components/common/CardContainer.vue";
+import GeneralCard from "@/components/profile/GeneralCard.vue";
+import SkillsCard from "@/components/profile/SkillsCard.vue";
+import SearchCard from "@/components/profile/SearchCard.vue";
+
+defineProps({
+  section: String,
+});
+</script>
 
 <style>
 .v-enter-active,

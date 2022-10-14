@@ -34,35 +34,28 @@
   </main>
 </template>
 
-<script lang="ts">
-import router from "@/router";
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 import mailAPI from "@/api/mail";
-export default {
-  setup() {
-    const route = useRoute();
-    let emailSend = ref();
+const route = useRoute();
+const router = useRouter();
 
-    onMounted(async () => {
-      if (!route.query.confirmation_id || !route.query.email) {
-        router.push({ path: "/login" });
-      }
-      await mailAPI
-        .sendVerificationMail([route.query.email], route.query.confirmation_id)
-        .then(() => {
-          emailSend.value = true;
-        })
-        .catch((e) => {
-          emailSend.value = false;
-        });
+let email = route.query.email;
+let emailSend = ref();
+
+onMounted(async () => {
+  if (!route.query.confirmation_id || !route.query.email) {
+    router.push({ path: "/login" });
+  }
+  await mailAPI
+    .sendVerificationMail([route.query.email], route.query.confirmation_id)
+    .then(() => {
+      emailSend.value = true;
+    })
+    .catch((e) => {
+      emailSend.value = false;
     });
-    return {
-      confirmation_id: route.query.confirmation_id,
-      email: route.query.email,
-      emailSend,
-    };
-  },
-};
+});
 </script>

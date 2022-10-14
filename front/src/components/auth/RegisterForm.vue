@@ -32,6 +32,7 @@
         type="password"
         v-model="confirm_password"
         label="Confirmer mot de passe"
+        :rules="passwordMatches"
       />
       <span class="text-green-4 text-bold">Je suis...</span>
       <div class="row justify-center">
@@ -91,100 +92,89 @@
   </CardContainer>
 </template>
 
-<script>
-import { ref } from "vue";
-import router from "@/router";
-
+<script setup lang="ts">
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 import { authStore } from "@/stores/auth";
 import { notify } from "@/helpers/notify";
-import CardContainer from "../common/CardContainer.vue";
+import CardContainer from "@/components/common/CardContainer.vue";
+const router = useRouter();
 
-export default {
-  props: {
-    register: Boolean,
-  },
-  computed: {
-    passwordRules() {
-      return [
-        (val) =>
-          (val.length >= 8 && val !== val.toLowerCase()) ||
-          "La taille du mot de passe doit être de 8 caractères minimum et contenir au moins une majuscule",
-      ];
-    },
-  },
-  setup() {
-    const store = authStore();
-    const firstname = ref(null);
-    const lastname = ref(null);
-    const email = ref(null);
-    const password = ref(null);
-    const confirm_password = ref(null);
-    let role = ref(null);
-    return {
-      firstname,
-      lastname,
-      email,
-      password,
-      confirm_password,
-      role,
-      setRole(choice) {
-        role.value = choice;
-      },
-      onSubmit() {
-        if (
-          firstname.value == null ||
-          lastname.value == null ||
-          email.value === null ||
-          password.value === null ||
-          role.value === null
-        ) {
-          notify.error("Completez entièrement le formulaire");
-        } else if (password.value !== confirm_password.value) {
-          notify.error("Les mots de passe ne correspondent pas");
+const passwordRules = computed(() => {
+  return [
+    (val) =>
+      (val.length >= 8 && val !== val.toLowerCase()) ||
+      "La taille du mot de passe doit être de 8 caractères minimum et contenir au moins une majuscule",
+  ];
+});
+
+const passwordMatches = computed(() => {
+  return [
+    (val) => password.value == val || "Les mots de passe ne correspondent pas",
+  ];
+});
+
+const store = authStore();
+const firstname = ref(null);
+const lastname = ref(null);
+const email = ref(null);
+const password = ref(null);
+const confirm_password = ref(null);
+const role = ref(null);
+
+function setRole(choice) {
+  role.value = choice;
+}
+
+function onSubmit() {
+  if (
+    firstname.value == null ||
+    lastname.value == null ||
+    email.value === null ||
+    password.value === null ||
+    role.value === null
+  ) {
+    notify.error("Completez entièrement le formulaire");
+  } else {
+    store
+      .signIn(
+        firstname.value,
+        lastname.value,
+        email.value,
+        password.value,
+        role.value
+      )
+      .then((response) => {
+        router.push({
+          name: "verify",
+          query: {
+            confirmation_id: response.data.confirmation_id,
+            email: email.value,
+          },
+        });
+        notify.success("Inscription validée");
+      })
+      .catch((e) => {
+        if ("response" in e) {
+          if (e.response.data.detail === "Email already taken") {
+            notify.error(
+              "Cette addresse e-mail a déja été enregistrée. Veuillez en choisir une autre."
+            );
+          }
         } else {
-          store
-            .signIn(
-              firstname.value,
-              lastname.value,
-              email.value,
-              password.value,
-              role.value
-            )
-            .then((response) => {
-              router.push({
-                name: "verify",
-                query: {
-                  confirmation_id: response.data.confirmation_id,
-                  email: email.value,
-                },
-              });
-              notify.success("Inscription validée");
-            })
-            .catch((e) => {
-              if ("response" in e) {
-                if (e.response.data.detail === "Email already taken") {
-                  notify.error(
-                    "Cette addresse e-mail a déja été enregistrée. Veuillez en choisir une autre."
-                  );
-                }
-              } else {
-                console.error("Error on signIn:", e);
-              }
-            });
+          console.error("Error on signIn:", e);
         }
-      },
-      onReset() {
-        firstname.value = null;
-        lastname.value = null;
-        email.value = null;
-        password.value = null;
-        confirm_password.value = null;
-        role.value = null;
-      },
-    };
-  },
-  components: { CardContainer },
-};
+      });
+  }
+}
+function onReset() {
+  firstname.value = null;
+  lastname.value = null;
+  email.value = null;
+  password.value = null;
+  confirm_password.value = null;
+  role.value = null;
+}
 </script>
 
 <style>

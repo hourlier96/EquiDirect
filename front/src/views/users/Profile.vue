@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import Menu from "../../components/profile/Menu.vue";
-</script>
-
 <template>
   <div class="row justify-center no-wrap" style="width: 100%">
     <Menu
@@ -15,19 +11,16 @@ import Menu from "../../components/profile/Menu.vue";
   <br />
 </template>
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      activeSection: "general",
-    };
-  },
-  methods: {
-    setSection(section) {
-      this.activeSection = section;
-    },
-  },
-};
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+import Menu from "@/components/profile/Menu.vue";
+import userAPI from "@/api/resources/users";
+
+const activeSection = ref("general");
+
+function setSection(section) {
+  activeSection.value = section;
+}
 </script>
 
 <style>

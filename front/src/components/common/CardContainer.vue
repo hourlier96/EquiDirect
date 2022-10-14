@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   width: String,
   title: String,
   bigTitle: Boolean,

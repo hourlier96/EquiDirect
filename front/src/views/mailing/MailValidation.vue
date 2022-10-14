@@ -35,47 +35,38 @@
   </main>
 </template>
 
-<script>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-
 import userAPI from "@/api/resources/users";
-export default {
-  setup() {
-    const route = useRoute();
 
-    let validation = ref(null);
+const route = useRoute();
+const confirmation_id = route.query.confirmation_id;
+const email = route.query.email;
+const validation = ref();
 
-    onMounted(async () => {
+onMounted(async () => {
+  await userAPI
+    .getUserFromEmailAndConfirmId({
+      email: route.query.email,
+      confirmation_id: route.query.confirmation_id,
+      access_token: route.query.access_token,
+    })
+    .then(async (response) => {
+      const userId = response.data.id;
       await userAPI
-        .getUserFromEmailAndConfirmId({
-          email: route.query.email,
-          confirmation_id: route.query.confirmation_id,
-          access_token: route.query.access_token,
-        })
-        .then(async (response) => {
-          const userId = response.data.id;
-          await userAPI
-            .confirmUser(userId, { confirmed: true }, route.query.access_token)
-            .then(() => {
-              validation.value = true;
-            })
-            .catch((e) => {
-              validation.value = false;
-              console.error(e);
-            });
+        .confirmUser(userId, { confirmed: true }, route.query.access_token)
+        .then(() => {
+          validation.value = true;
         })
         .catch((e) => {
           validation.value = false;
           console.error(e);
         });
+    })
+    .catch((e) => {
+      validation.value = false;
+      console.error(e);
     });
-    return {
-      confirmation_id: route.query.confirmation_id,
-      email: route.query.email,
-      access_token: route.query.access_token,
-      validation,
-    };
-  },
-};
+});
 </script>
