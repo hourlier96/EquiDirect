@@ -1,6 +1,6 @@
 from db import prisma
 from entities.users.controller import get_users
-from entities.users.model import UserPost, UserRead
+from entities.users.model import UserPost, UserReadRegistration
 from fastapi import HTTPException, status
 from routers.auth import router
 from utils.hash import check_password, hash_password, new_salt
@@ -40,8 +40,8 @@ async def access_token(user_login: UserLogin):
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.post("/register", response_model=UserRead)
-async def create_user(user_in: UserPost) -> UserRead:
+@router.post("/register", response_model=UserReadRegistration)
+async def create_user(user_in: UserPost) -> UserReadRegistration:
     exists = await prisma.user.find_first(where={"email": user_in.email})
     if exists:
         raise HTTPException(status_code=400, detail="Email already taken")

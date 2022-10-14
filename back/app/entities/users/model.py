@@ -24,14 +24,20 @@ class UserPost(BaseModel):
         use_enum_values = True
 
 
-class UserRead(UserPost):
+class UserRead(BaseModel):
     id: int
-    confirmation_id: str
+    email: str
+    lastname: str
+    firstname: str
+    role: Role
     confirmed: bool
-    last_email_send: Optional[datetime] = Field(None)
 
     class Config:
         use_enum_values = True
+
+
+class UserReadRegistration(UserRead):
+    confirmation_id: str
 
 
 class UserUpdate(BaseModel):
