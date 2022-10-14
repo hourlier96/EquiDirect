@@ -53,11 +53,14 @@
 import { ref } from "vue";
 import router from "@/router";
 import userAPI from "@/api/resources/users";
+import individualAPI from "@/api/resources/individual";
 import { authStore } from "@/stores/auth";
+import { individualStore } from "@/stores/individual";
 import { notify } from "@/helpers/notify";
 import CardContainer from "@/components/common/CardContainer.vue";
 
 const store = authStore();
+const indivStore = individualStore();
 
 const email = ref(null);
 const password = ref(null);
@@ -72,7 +75,7 @@ async function onSubmit() {
         const token = response.data.access_token;
         await userAPI
           .getUserFromEmail({ email: email.value, access_token: token })
-          .then((response) => {
+          .then(async (response) => {
             const user = response.data;
             if (!user.confirmed) {
               notify.error(
@@ -81,8 +84,17 @@ async function onSubmit() {
             } else {
               store.accessToken = token;
               store.storeUser(user);
-              notify.success("Rebonjour " + store.currentUser.firstname);
-              router.push({ path: "/dashboard" });
+              await individualAPI
+                .getIndividualFromUser({ user_id: user.id })
+                .then((response) => {
+                  const individual = response.data;
+                  indivStore.storeIndividual(individual);
+                  notify.success("Rebonjour " + store.currentUser.firstname);
+                  router.push({ path: "/dashboard" });
+                })
+                .catch((e) => {
+                  console.error(e);
+                });
             }
           })
           .catch((e) => {
