@@ -1,5 +1,6 @@
-import { createApp, watch } from "vue";
+import { createApp } from "vue";
 import { createPinia } from "pinia";
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 import { Quasar } from "quasar";
 import quasarLang from "quasar/lang/fr";
@@ -17,7 +18,6 @@ import { Notify } from "quasar";
 import App from "./App.vue";
 import router from "./router";
 import setup from "./interceptor";
-import { storage } from "./helpers/storage"
 
 import "./assets/main.css";
 
@@ -30,7 +30,7 @@ app.use(Quasar, {
 });
 
 const pinia = createPinia()
-storage.syncStoreWithLocalStorage(pinia)
+pinia.use(piniaPluginPersistedstate)
 app.use(pinia);
 
 app.use(router);

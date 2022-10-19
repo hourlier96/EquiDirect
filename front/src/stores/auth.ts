@@ -1,6 +1,4 @@
 import { defineStore } from "pinia";
-
-import { storage } from "@/helpers/storage";
 import authAPI from "@/api/auth";
 
 const defaultUser = {
@@ -16,16 +14,8 @@ const defaultUser = {
 export const authStore = defineStore({
   id: "auth",
   state: () => ({
-    currentUser: {
-      id: storage.getAuth().currentUser.id || null,
-      email: storage.getAuth().currentUser.email || null,
-      firstname: storage.getAuth().currentUser.firstname || null,
-      lastname: storage.getAuth().currentUser.lastname || null,
-      role: storage.getAuth().currentUser.role || null,
-      confirmation_id: storage.getAuth().currentUser.confirmation_id || null,
-      confirmed: storage.getAuth().currentUser.confirmed || null,
-    },
-    accessToken: storage.getAuth().accessToken || null,
+    currentUser: { ...defaultUser },
+    accessToken: null,
   }),
   getters: {
     userEmail: (state) => state.currentUser.email,
@@ -62,6 +52,5 @@ export const authStore = defineStore({
       return response;
     },
   },
+  persist: true,
 });
-
-export default defaultUser;

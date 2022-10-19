@@ -11,7 +11,7 @@ export const session = {
         return authStore().currentUser.lastname
     },
     getRole() {
-        return authStore().currentUser.role
+        return authStore().currentUser.role || ""
     },
     getEmail() {
         return authStore().currentUser.email

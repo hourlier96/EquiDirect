@@ -1,6 +1,4 @@
 import { defineStore } from "pinia";
-import { storage } from "@/helpers/storage";
-
 import individualAPI from "@/api/resources/individual";
 
 export const individualStore = defineStore({
@@ -14,5 +12,9 @@ export const individualStore = defineStore({
     userId: (state) => state.user_id,
   },
   actions: {
-  }
+    storeIndividual(individual) {
+      this.individual = individual
+    }
+  },
+  persist: true
 });
