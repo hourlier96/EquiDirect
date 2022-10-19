@@ -2,6 +2,8 @@ import axiosInstance from "./helpers/axios";
 import { session } from "./helpers/session";
 import { authStore } from "./stores/auth";
 import router from "@/router/index";
+import { notify } from "./helpers/notify";
+
 const setup = () => {
   router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
@@ -36,6 +38,35 @@ const setup = () => {
     },
     (error) => {
       return Promise.reject(error);
+    }
+  );
+
+  axiosInstance.axiosInstance.interceptors.response.use(
+    response => {
+      if (response.status === 200 || response.status === 201) {
+        return Promise.resolve(response);
+      } else {
+        return Promise.reject(response);
+      }
+    },
+    error => {
+      if (error.response.status) {
+        switch (error.response.status) {
+          case 401:
+            notify.warning('Session expirée. Veuillez vous reconnecter.')
+            authStore().resetUser();
+            router.push({
+              path: "/login",
+            });
+            break;
+          case 403:
+            router.push({
+              path: "/login",
+            });
+            break;
+        }
+        return Promise.reject(error.response);
+      }
     }
   );
 };

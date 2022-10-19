@@ -34,14 +34,14 @@ class JWTBearer(HTTPBearer):
         if credentials:
             if not credentials.scheme == "Bearer":
                 raise HTTPException(
-                    status_code=status.HTTP_403_FORBIDDEN,
+                    status_code=status.HTTP_401_UNAUTHORIZED,
                     detail="Invalid authentication scheme.",
                 )
             self.verify_jwt(credentials.credentials)
             return credentials.credentials
         else:
             raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
+                status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid authorization code.",
             )
 
@@ -52,6 +52,6 @@ class JWTBearer(HTTPBearer):
             return "sub" in decoded
         except JWTError:
             raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
+                status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid token or expired token.",
             )
