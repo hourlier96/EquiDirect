@@ -29,6 +29,7 @@ export const individualStore = defineStore({
     individual: {
       id: null,
       user_id: null,
+      biography: null,
       address: null,
       disciplines: [],
       experience: null,
@@ -39,7 +40,7 @@ export const individualStore = defineStore({
       prices: null,
       professionnalCard: null,
       profilPicture: null,
-      rate: null,
+      rate: 0,
       searchingWork: null,
       selfEmployed: null,
       skills: [],

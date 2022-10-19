@@ -1,62 +1,66 @@
 <template>
-  <div>
-    <div class="row justify-around no-wrap">
+  <div class="col-9">
+    <div class="row q-mb-xl justify-around no-wrap">
+      <h5 color="green">Critères de recherche</h5>
       <q-input
-        class="col-5 q-mb-md"
-        filled
-        v-model="text"
-        label="Label"
-        :dense="false"
-      ></q-input>
-      <q-input
-        class="col-5 q-mb-md"
-        filled
-        v-model="text"
-        label="Label"
-        :dense="false"
+        class="col-5 q-ml-auto"
+        type="date"
+        readonly
+        v-model="user!.created_at"
+        hint="En activité depuis le"
       ></q-input>
     </div>
     <div class="row justify-around no-wrap">
       <q-input
         class="col-5 q-mb-md"
         filled
-        v-model="text"
-        label="Label"
-        :dense="false"
+        readonly
+        v-model="user!.firstname"
+        label="Prénom"
       ></q-input>
       <q-input
         class="col-5 q-mb-md"
         filled
-        v-model="text"
-        label="Label"
-        :dense="false"
+        readonly
+        v-model="user!.lastname"
+        label="Nom"
       ></q-input>
     </div>
     <div class="row justify-around no-wrap">
       <q-input
         class="col-5 q-mb-md"
         filled
-        v-model="text"
-        label="Label"
-        :dense="false"
+        readonly
+        v-model="user!.email"
+        label="Email"
       ></q-input>
       <q-input
         class="col-5 q-mb-md"
         filled
-        v-model="text"
-        label="Label"
-        :dense="false"
+        readonly
+        v-model="individual!.address"
+        label="Addresse"
+      ></q-input>
+    </div>
+    <div class="row justify-around no-wrap">
+      <q-input
+        class="col-5 q-mb-md"
+        filled
+        readonly
+        v-model="user!.age"
+        label="Date de naissance"
       ></q-input>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      text: "search",
-    };
+<script setup lang="ts">
+const props = defineProps({
+  user: {
+    type: Object,
   },
-};
+  individual: {
+    type: Object,
+  },
+});
 </script>
