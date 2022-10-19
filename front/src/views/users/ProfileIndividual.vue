@@ -1,7 +1,11 @@
 <template>
-  <CardContainer title="Entrez vos informations">
+  <CardContainer>
     <Transition mode="out-in">
-      <GeneralCard v-if="section == 'general'" />
+      <GeneralCard
+        :user="store.currentUser"
+        :individual="indivStore.individual"
+        v-if="section == 'general'"
+      />
       <SkillsCard v-else-if="section == 'skills'" />
       <SearchCard v-else-if="section == 'search'" />
     </Transition>
@@ -20,10 +24,15 @@
 </template>
 
 <script setup lang="ts">
+import { authStore } from "@/stores/auth";
+import { individualStore } from "@/stores/individual";
 import CardContainer from "@/components/common/CardContainer.vue";
 import GeneralCard from "@/components/profile/GeneralCard.vue";
 import SkillsCard from "@/components/profile/SkillsCard.vue";
 import SearchCard from "@/components/profile/SearchCard.vue";
+
+const store = authStore();
+const indivStore = individualStore();
 
 defineProps({
   section: String,

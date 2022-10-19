@@ -13,6 +13,12 @@ export const session = {
     getRole() {
         return authStore().currentUser.role || ""
     },
+    isCompany() {
+        return authStore().currentUser.role === "COMPANY"
+    },
+    isIndividual() {
+        return authStore().currentUser.role === "INDIVIDUAL"
+    },
     getEmail() {
         return authStore().currentUser.email
     },

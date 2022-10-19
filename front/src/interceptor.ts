@@ -54,7 +54,7 @@ const setup = () => {
         switch (error.response.status) {
           case 401:
             notify.warning('Session expirée. Veuillez vous reconnecter.')
-            authStore().resetUser();
+            authStore().$reset();
             router.push({
               path: "/login",
             });

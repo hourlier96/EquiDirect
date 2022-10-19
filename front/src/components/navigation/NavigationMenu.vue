@@ -64,7 +64,7 @@ function getProfilePage() {
 }
 
 function logout() {
-  store.resetUser();
+  store.$reset();
   router.push({ path: "/login" });
 }
 </script>

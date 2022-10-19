@@ -84,17 +84,21 @@ async function onSubmit() {
             } else {
               store.accessToken = token;
               store.storeUser(user);
-              await individualAPI
-                .getIndividualFromUser({ user_id: user.id })
-                .then((response) => {
-                  const individual = response.data;
-                  indivStore.storeIndividual(individual);
-                  notify.success("Rebonjour " + store.currentUser.firstname);
-                  router.push({ path: "/dashboard" });
-                })
-                .catch((e) => {
-                  console.error(e);
-                });
+              if (user.role === "INDIVIDUAL") {
+                await individualAPI
+                  .getIndividualFromUser({ user_id: user.id })
+                  .then((response) => {
+                    const individual = response.data;
+                    indivStore.storeIndividual(individual);
+                    notify.success("Rebonjour " + store.currentUser.firstname);
+                    router.push({ path: "/dashboard" });
+                  })
+                  .catch((e) => {
+                    console.error(e);
+                  });
+              } else if (user.role === "COMPANY") {
+                // TODO
+              }
             }
           })
           .catch((e) => {

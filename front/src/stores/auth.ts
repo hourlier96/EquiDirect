@@ -24,10 +24,6 @@ export const authStore = defineStore({
     userRole: (state) => state.currentUser.role,
   },
   actions: {
-    resetUser() {
-      this.currentUser = defaultUser;
-      this.accessToken = null;
-    },
     async getJwt(userEmail: String, password: String) {
       return await authAPI.getJwt(userEmail, password);
     },
