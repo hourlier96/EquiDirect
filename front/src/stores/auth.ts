@@ -9,6 +9,7 @@ const defaultUser = {
   role: null,
   confirmation_id: null,
   confirmed: null,
+  created_at: null
 };
 
 export const authStore = defineStore({

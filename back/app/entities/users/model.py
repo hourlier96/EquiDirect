@@ -1,5 +1,6 @@
 from datetime import datetime
 from enum import Enum
+from sqlite3 import Date
 from typing import List, Optional, Union
 
 from pydantic import BaseModel, Field
@@ -31,6 +32,7 @@ class UserRead(BaseModel):
     firstname: str
     role: Role
     confirmed: bool
+    created_at: Date
 
     class Config:
         use_enum_values = True
